@@ -1,45 +1,45 @@
 const express = require("express");
-const uuid = require("uuid");
+const uuid = require("uuid")
 const server = express();
-server.use(express.json());
-server.use(express.static('public'));
+server.use(express.json())
+server.use(express.static('public'))
 
 
 //All your code goes here
-let activeSessions={}
+let activeSessions={
+
+}
 
 server.get('/newgame', (req, res)=>{
-    let newID = uuid.v4();
-    let newGame={
-        wordToGuess: "pump",
-        guesses:[],
-        correctLetters:[],
-        closeLetters:[],
-        rightLetters:[],
-        remainingGuesses: 6,
-        gameOver: false
+let newID = uuid.v4()
+let newGame={
+    wordToGuess: "spike",
+    guesses:[],
+    wrongLetters:[],
+    closeLetters:[],
+    rightLetters: [],
+    remainingGuesses: 6,
+    gameOver: false
+}
+activeSessions[newID] = newGame
+console.log(activeSessions);
 
-    }
-    activeSessions[newID] = newGame;
-    console.log(activeSessions);
+res.status(201);
+res.send({sessionID: newID});
 
-    res.status(201);
-    res.send({sessionID: newID});
-    
 })
 
-server.get('/gamestate', (req, res) =>{
-    let id = req.query.activeSessions;
+server.get('/gamestate', (req, res) => {
 
-    res.send(id);
-    console.log(id);
-})
+    res.status(200);
 
-//server.get('/guess', (req, res) =>{
- //   console.log("good job!  You got it wrong!");
+    let gameState = activeSessions[req.query.sessionID]
+    res.send({gameState})
     
-//})
+})
+server.get('/newgame', (req, res) => {
 
+})
 
 //Do not remove this line. This allows the test suite to start
 //multiple instances of your server on different ports
