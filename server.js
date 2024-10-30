@@ -29,13 +29,16 @@ server.get('/newgame', (req, res)=>{
 })
 
 server.get('/gamestate', (req, res) =>{
-        res.status(200);
+    let id = req.query.activeSessions;
+
+    res.send(id);
+    console.log(id);
 })
 
-server.get('/guess', (req, res) =>{
-    console.log("good job!  You got it wrong!");
+//server.get('/guess', (req, res) =>{
+ //   console.log("good job!  You got it wrong!");
     
-})
+//})
 
 
 //Do not remove this line. This allows the test suite to start
